@@ -18,7 +18,7 @@ This requires npm/npx and may download pnpm on the first invocation.
 make install
 make build
 make check
-pnpm start --help
+node dist/index.js --help
 ```
 
 Run `make` to list available targets. Husky runs Prettier and ESLint on staged
@@ -43,6 +43,16 @@ global installation. To remove it:
 ```sh
 make uninstall-global
 ```
+
+## Usage
+
+```sh
+CALLITTO_API_KEY=test-key callitto "yoo claude, refactor ini..."
+```
+
+Callitto currently validates the prompt and environment variable, then prints
+`Ready.`. It does not contact Gemini or verify the key with the service yet.
+API keys are read from `CALLITTO_API_KEY` and are never printed or saved to a file.
 
 ## Tooling compatibility
 
