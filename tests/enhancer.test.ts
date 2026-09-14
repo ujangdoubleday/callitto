@@ -1,6 +1,6 @@
 import { ApiError, GoogleGenAI } from '@google/genai';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
-import { enhancePrompt } from '../src/services/enhancer.js';
+import { SYSTEM_INSTRUCTION, enhancePrompt } from '../src/services/enhancer.js';
 
 const { generateContent } = vi.hoisted(() => ({ generateContent: vi.fn() }));
 
@@ -39,10 +39,7 @@ test('sends the exact instruction and raw prompt, returning only trimmed text', 
   expect(generateContent).toHaveBeenCalledExactlyOnceWith({
     model: 'gemini-3.8-flash',
     contents: prompt,
-    config: {
-      systemInstruction:
-        "You are an Expert AI Prompt Engineer and a Senior Software Architect. Translate the casual Indonesian user intent into a highly optimized, professional English prompt designed for an advanced AI coding assistant. Reorganize it using a framework: Context, Objective, Requirements, Expected Output, and Guidelines. Embed 'senior-level' instructions requiring clean code, modularity, and best practices. DO NOT answer the prompt; ONLY output the enhanced prompt. Keep placeholders like @filename intact.",
-    },
+    config: { systemInstruction: SYSTEM_INSTRUCTION },
   });
 });
 
