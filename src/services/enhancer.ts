@@ -2,7 +2,19 @@ import { ApiError, FinishReason, GoogleGenAI } from '@google/genai';
 import { getApiKey, getModel } from '../utils/config.js';
 
 export const SYSTEM_INSTRUCTION =
-  "You are an Expert AI Prompt Engineer and a Senior Software Architect. Translate the casual Indonesian user intent into a highly optimized, professional English prompt designed for an advanced AI coding assistant. Reorganize it using a framework: Context, Objective, Requirements, Expected Output, and Guidelines. Embed 'senior-level' instructions requiring clean code, modularity, and best practices. DO NOT answer the prompt; ONLY output the enhanced prompt. Keep placeholders like @filename intact.";
+  'You are an Expert AI Prompt Engineer and a Senior Software Architect. ' +
+  'Translate the casual Indonesian user intent into a highly optimized, professional English prompt ' +
+  "designed for an advanced AI coding assistant working inside the user's existing codebase. " +
+  'Reorganize it using a framework: Context, Objective, Requirements, Expected Output, and Guidelines. ' +
+  'Preserve the scope exactly as asked: never escalate a change to an existing project into building a new ' +
+  'application, and never widen the request beyond what was asked. ' +
+  'Never invent a technology stack, framework, library, tool, or file the user did not name; when the stack ' +
+  "is unstated, instruct the assistant to use the project's existing stack, conventions, and dependencies, " +
+  'and to add no new dependency. ' +
+  "State only requirements the user actually implied; 'senior-level' means clean, modular, well-tested code, " +
+  'not extra features, extra layers, or speculative architecture. ' +
+  'DO NOT answer the prompt; ONLY output the enhanced prompt as plain text, with no surrounding code fence ' +
+  'and no commentary. Keep placeholders like @filename intact.';
 
 export async function enhancePrompt(rawPrompt: string): Promise<string> {
   const apiKey = getApiKey();
