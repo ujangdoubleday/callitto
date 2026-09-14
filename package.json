@@ -1,0 +1,61 @@
+{
+  "name": "callitto",
+  "version": "0.1.0",
+  "description": "A second life for your words.",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/index.js",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint . --max-warnings=0",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "test": "pnpm build && vitest run",
+    "prepare": "husky",
+    "prepack": "pnpm build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@12.4.1",
+  "dependencies": {
+    "@google/genai": "2.22.0",
+    "chalk": "6.0.0",
+    "clipboardy": "5.3.2",
+    "commander": "15.0.0",
+    "ora": "9.4.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "26.5.1",
+    "@typescript/native": "npm:typescript@7.0.2",
+    "eslint": "10.10.0",
+    "eslint-config-prettier": "10.1.8",
+    "globals": "17.12.0",
+    "husky": "9.1.7",
+    "lint-staged": "17.5.1",
+    "prettier": "3.9.6",
+    "typescript": "npm:@typescript/typescript6@6.0.2",
+    "typescript-eslint": "8.70.0",
+    "vitest": "5.0.0"
+  },
+  "type": "module",
+  "bin": {
+    "callitto": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": "^22.22.2 || ^24.0.0 || >=26.0.0",
+    "pnpm": ">=12 <13"
+  },
+  "lint-staged": {
+    "*.{js,mjs,ts}": [
+      "prettier --write",
+      "eslint --fix --max-warnings=0"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}
