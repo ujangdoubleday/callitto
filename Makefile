@@ -26,7 +26,7 @@ check:
 install-global:
 	$(MAKE) install
 	$(MAKE) build
-	$(PNPM) add -g .
+	npm link --ignore-scripts
 
 uninstall-global:
-	$(PNPM) remove -g callitto
+	npm unlink --global callitto
