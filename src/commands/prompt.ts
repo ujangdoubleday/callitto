@@ -1,10 +1,10 @@
-import { getApiKey } from '../utils/config.js';
+import { enhancePrompt } from '../services/enhancer.js';
 
-export function runPrompt(rawPrompt: string): void {
+export async function runPrompt(rawPrompt: string): Promise<void> {
   if (!rawPrompt.trim()) {
     throw new Error('Prompt must not be empty.');
   }
 
-  getApiKey();
-  console.log('Ready.');
+  const enhancedPrompt = await enhancePrompt(rawPrompt);
+  console.log(enhancedPrompt);
 }
