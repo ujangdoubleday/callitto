@@ -8,7 +8,8 @@ A second life for your words.
 - npm/npx
 - GNU Make
 
-Make targets use pnpm 12.4.1 through npx.
+Dependencies and builds use pnpm 12.4.1 through npx. Global installation uses
+`npm link`.
 
 ## Install
 
@@ -17,13 +18,8 @@ make install-global
 callitto --help
 ```
 
-If the global bin directory is missing from `PATH`, run:
-
-```sh
-npx --yes pnpm@12.4.1 setup
-```
-
-Reopen your terminal and retry `make install-global`.
+This links the checkout into npm's global bin directory, which must be on `PATH`.
+Keep the checkout in place while using the global command.
 
 ## Usage
 
@@ -31,8 +27,13 @@ Reopen your terminal and retry `make install-global`.
 CALLITTO_API_KEY=test-key callitto "yoo claude, refactor ini..."
 ```
 
-Currently validates the prompt and API key configuration, then prints `Ready.`.
-No Gemini request is made yet. The key is never printed or saved by Callitto.
+Set `CALLITTO_API_KEY` to your Gemini API key before running the command.
+Callitto sends your prompt to Gemini and prints the enhanced English prompt.
+The key is never printed or saved by Callitto.
+
+The default model is `gemini-3.8-flash`. Set `CALLITTO_MODEL` to use another model
+available to your API key. Requests time out after 60 seconds without automatic
+retries. Errors go to stderr; successful output contains only the enhanced prompt.
 
 ## Development
 
@@ -46,7 +47,7 @@ node dist/index.js --help
 Pre-commit hooks run Prettier and ESLint on staged files. Builds use TypeScript 7;
 ESLint uses the TypeScript 6 compatibility API.
 
-Run `make install-global` after source changes to refresh the global CLI.
+Run `make build` after source changes to update the linked CLI.
 
 ## Uninstall
 
