@@ -7,3 +7,7 @@ export function getApiKey(): string {
 
   return apiKey;
 }
+
+export function getModel(): string {
+  return process.env.CALLITTO_MODEL?.trim() || 'gemini-3.8-flash';
+}

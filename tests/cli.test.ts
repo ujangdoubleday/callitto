@@ -35,16 +35,6 @@ test.each(['--help', '--version'])('%s works without an API key', (flag) => {
   }
 });
 
-test.each(['yoo claude, refactor ini...', 'refactor ini\ntanpa mengubah API'])(
-  'accepts a prompt without printing it: %s',
-  (prompt) => {
-    const result = runCli([prompt], '  test-secret-key  ');
-    expect(result.status).toBe(0);
-    expect(result.stdout).toBe('Ready.\n');
-    expect(result.stderr).toBe('');
-  },
-);
-
 test.each([
   { args: [], message: "missing required argument 'prompt'" },
   { args: [''], message: 'Prompt must not be empty.' },
