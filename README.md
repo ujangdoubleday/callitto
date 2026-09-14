@@ -31,6 +31,12 @@ Set `CALLITTO_API_KEY` to your Gemini API key before running the command.
 Callitto sends your prompt to Gemini and prints the enhanced English prompt.
 The key is never printed or saved by Callitto.
 
+The spinner goes to stderr, so stdout stays pipeable:
+
+```sh
+callitto "refactor ini" > prompt.md
+```
+
 The default model is `gemini-3.8-flash`. Set `CALLITTO_MODEL` to use another model
 available to your API key. Requests time out after 60 seconds without automatic
 retries. Errors go to stderr; successful output contains only the enhanced prompt.
