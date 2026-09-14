@@ -46,10 +46,6 @@ make uninstall-global
 
 ## Tooling compatibility
 
-All direct dependencies use the latest stable releases selected during setup.
-TypeScript 7 is newer than the supported peer range declared by typescript-eslint
-8.70.0 (`>=4.8.4 <6.1.0`). Installation allows this mismatch and keeps the warning
-visible. The current typescript-eslint release explicitly rejects TypeScript 7,
-so `pnpm lint`, `make check`, and pre-commit hooks containing staged code fail.
-All direct dependencies remain on the latest stable releases as requested; this
-is an unresolved upstream compatibility issue, not a passing lint configuration.
+Builds and type checks use TypeScript 7. ESLint uses the official TypeScript 6
+compatibility API through a package alias, following the
+[TypeScript migration guide](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/#running-side-by-side-with-typescript-6.0).
