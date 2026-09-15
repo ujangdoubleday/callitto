@@ -13,7 +13,11 @@ export async function runPrompt(rawPrompt: string): Promise<void> {
 
   let enhancedPrompt: string;
   try {
-    enhancedPrompt = await enhancePrompt(rawPrompt);
+    enhancedPrompt = await enhancePrompt(rawPrompt, (message) => {
+      spinner.stop();
+      console.error(message);
+      spinner.start();
+    });
   } finally {
     spinner.stop();
   }

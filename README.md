@@ -38,8 +38,33 @@ callitto "refactor ini" > prompt.md
 ```
 
 The default model is `gemini-3.8-flash`. Set `CALLITTO_MODEL` to use another model
-available to your API key. Requests time out after 60 seconds without automatic
-retries. Errors go to stderr; successful output contains only the enhanced prompt.
+available to your API key. If it fails, Callitto tries `gemini-2.5-flash`, then
+`gemini-2.5-flash-lite`. Override the backup order with a comma-separated list:
+
+```sh
+CALLITTO_MODEL=gemini-3.8-flash \
+CALLITTO_FALLBACK_MODELS=gemini-2.5-flash,gemini-2.5-flash-lite \
+callitto "refactor ini"
+```
+
+Set `CALLITTO_FALLBACK_MODELS=''` to disable backups. Blank entries are ignored;
+duplicate models are attempted only once, with the primary model always first.
+Every attempt receives the same prompt and instructions.
+
+Callitto switches models on unavailable models (404), timeouts (408), rate limits
+(429), server errors (5xx), network/request failures, and empty or incomplete
+responses. It stops on other HTTP errors, missing credentials, client setup
+failures, or explicit content blocks. Partial responses are never printed.
+
+Each model gets one attempt with a 60-second timeout. HTTP 408/429/5xx failures
+wait 1 second before switching, then 2 seconds for subsequent switches. With the
+default three models, requests can take roughly 183 seconds in total; custom
+lists can take longer. Fallback cannot resolve shared quota or service outages.
+
+Fallback notices and final errors go to stderr, including the attempted models
+and sanitized failure reasons. API keys, raw provider errors, and prompts are
+excluded from these diagnostics. Stdout contains only the successful enhanced
+prompt; final failures exit with code 1 and no stdout.
 
 ## Development
 
